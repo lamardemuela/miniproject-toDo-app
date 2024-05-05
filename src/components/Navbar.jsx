@@ -4,12 +4,12 @@ import logo from "../assets/images/daily-logo.png"
 function Navbar() {
     // Styles
     const navbarStyles = {
-        backgroundColor: "#fbe6ec",
+        backgroundColor: "#e1e5f7",
         display: "flex",
         justifyContent: "space-between",
         padding: "16px 40px 16px 40px",
         alignItems: "center",
-        margin:"-8px -8px 0px -8px"
+        margin:"-8px -8px 32px -8px"
     }
 
     const divLinksStyles = {
@@ -25,9 +25,8 @@ function Navbar() {
     <nav style={navbarStyles}>
             <img src={logo} alt="daily logo" height="40px"/>
         <div style={divLinksStyles}>
-            <Link style={linkStyles} to="/"> Inicio </Link>
-            <Link style={linkStyles} to="/about">Sobre el proyecto</Link>
-            <Link style={linkStyles} to="/contacto"> Contacto </Link>
+            <Link style={linkStyles} to="/"> Home </Link>
+            <Link style={linkStyles} to="/about"> About </Link>
         </div>
     </nav>
   )

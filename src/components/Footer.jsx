@@ -9,13 +9,13 @@ function Footer() {
     backgroundColor: "#222",
     color: "#e4e2dd",
     alignItems: "center",
-    margin: "0px -8px -8px -8px"
+    margin: "40px -8px -8px -8px"
   };
 
   const anchorStyle = {
     fontWeight: "bold",
     textDecoration: "none",
-    color: "#fb89a9"
+    color: "#34B5D9"
   };
   return (
     <footer style={footerStyles}>
