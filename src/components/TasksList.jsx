@@ -1,28 +1,9 @@
 import React, { useState } from "react";
-import tasksJSON from "../data/tasks.json";
 import TaskItem from "./TaskItem";
-import { Link, Route, Routes } from "react-router-dom";
 import AddListItem from "./AddListItem";
 import { Button } from "antd";
 
-function TasksList() {
-  // State
-  const [tasksList, setTaskList] = useState(tasksJSON);
-  //   const [isFormShowing, setIsFormShowing] = useState(false)
-
-  const [open, setOpen] = useState(false);
-  
-
-  // Events
-  //   const handleShowForm = () => setIsFormShowing(!isFormShowing)
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
+function TasksList(props) {
   
 
   // Styles
@@ -50,23 +31,24 @@ function TasksList() {
     margin: "0px 24px 24px 24px",
     // borderBottom: "1px solid #e1e5f7",
   };
+
   return (
     <>
       {/* PAGE HEADER */}
       <div style={pageHeaderStyles}>
         <h1>Tasks list</h1>
-        <Button className="primary-btn" type="primary" onClick={showDrawer}>
+        <Button className="primary-btn" type="primary" onClick={props.showDrawer}>
           + Add task
         </Button>
       </div>
 
       {/* ADD FORM */}
-      {open === true && (
+      {props.open === true && (
         <AddListItem
-          open={open}
-          onClose={onClose}
-          tasksList={tasksList}
-          setTaskList={setTaskList}
+          open={props.open}
+          onClose={props.onClose}
+          tasksList={props.tasksList}
+          setTaskList={props.setTaskList}
         />
       )}
 
@@ -84,13 +66,8 @@ function TasksList() {
 
       {/* LIST ITEM */}
       <div style={containerListStyles}>
-        {tasksList.map((eachTask) => {
-          return (
-            <TaskItem
-              eachTask={eachTask}
-              key={eachTask.id}
-            />
-          );
+        {props.tasksList.map((eachTask) => {
+          return <TaskItem eachTask={eachTask} key={eachTask.id} />;
         })}
       </div>
     </>

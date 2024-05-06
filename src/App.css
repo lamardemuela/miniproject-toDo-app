@@ -8,4 +8,11 @@
 .primary-btn {
   background-color: #34B5D9;
   font-family: "Poppins", sans-serif;
+  color: #fff;
+  border: none
+}
+
+#drawer {
+  fontFamily: 'Poppins', sans-serif;
+  color: #222
 }

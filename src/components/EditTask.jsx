@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { Button, Drawer } from "antd";
-console.log(Button)
-function AddListItem(props) {
-  // State
-  const [nameValue, setNameValue] = useState("");
-  const [descriptValue, setDescriptValue] = useState("");
-  const [asignValue, setAsignValue] = useState("");
-  const [statusValue, setStatusValue] = useState("");
-  const [priorityValue, setPriorityValue] = useState("");
-  const [dueDateValue, setDueDateValue] = useState("");
+import { Drawer } from "antd";
+import React from "react";
+import { useState } from "react";
+
+function EditTask(props) {
+  // States
+  const [nameValue, setNameValue] = useState(props.nameValue);
+  const [descriptValue, setDescriptValue] = useState(props.descriptValue);
+  const [asignValue, setAsignValue] = useState(props.asignValue);
+  const [statusValue, setStatusValue] = useState(props.statusValue);
+  const [priorityValue, setPriorityValue] = useState(props.priorityValue);
+  const [dueDateValue, setDueDateValue] = useState(props.dueDateValue);
+
   // Events
   const handleNameChange = (event) => setNameValue(event.target.value);
   const handleDescriptChange = (event) => setDescriptValue(event.target.value);
@@ -20,20 +22,21 @@ function AddListItem(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    // recopilamos la info del form
-    const newTask = {
-      title: nameValue,
-      description: descriptValue,
-      assignee: asignValue,
-      status: statusValue,
-      priority: priorityValue,
-      dueDate: dueDateValue
-    }
-
-    // añadimos el nuevo item a la lista
-    props.setTaskList([ ...props.tasksList, newTask ])
-
-  } 
+    props.setTaskList((currentState) => {
+        const clone = JSON.parse(JSON.stringify(currentState));
+        clone.forEach((eachTask) => {
+            if(eachTask.id === props.foundTask.id) {
+                eachTask.title = nameValue
+                eachTask.description = descriptValue
+                eachTask.assignee = asignValue
+                eachTask.status = statusValue
+                eachTask.priority = priorityValue
+                eachTask.dueDate = dueDateValue
+            }
+        })
+        return clone
+    })
+  }
 
   // Styles
   const formStyles = {
@@ -58,22 +61,22 @@ function AddListItem(props) {
     borderRadius: "4px",
     padding: "0px 8px 0px 8px",
   };
+
   return (
-    <>
-      <Drawer 
+    <div>
+      <Drawer
         className="drawer"
-        title="Add a new task"
+        title="Edit task"
         onClose={props.onClose}
         open={props.open}
       >
-        <form  onSubmit={ handleSubmit }style={formStyles}>
+        <form onSubmit={handleSubmit} style={formStyles}>
           <div style={formDivsStyles}>
             <label htmlFor="name"> Name </label>
             <input
               style={inputsStyles}
               type="text"
               name="name"
-              placeholder="Type the task name"
               value={nameValue}
               onChange={handleNameChange}
             />
@@ -84,7 +87,6 @@ function AddListItem(props) {
               style={inputsStyles}
               type="text"
               name="description"
-              placeholder="Describe your task"
               value={descriptValue}
               onChange={handleDescriptChange}
             />
@@ -96,7 +98,6 @@ function AddListItem(props) {
               style={inputsStyles}
               type="text"
               name="assignee"
-              placeholder="Assign this task to someone"
               value={asignValue}
               onChange={handleAssignChange}
             />
@@ -110,7 +111,6 @@ function AddListItem(props) {
               value={statusValue}
               onChange={handleStatusChange}
             >
-              <option value="select"> Select a status </option>
               <option value="To Do"> To Do </option>
               <option value="In progress"> In progress </option>
               <option value="Done"> Done </option>
@@ -125,25 +125,25 @@ function AddListItem(props) {
               value={priorityValue}
               onChange={handlePriorityChange}
             >
-              <option value="select"> Select a priority </option>
               <option value="Low"> Low </option>
               <option value="Medium"> Medium </option>
               <option value="High"> High </option>
             </select>
           </div>
           <div style={formDivsStyles}>
-          <label htmlFor="due date"> Due Date </label>
-            <input type="date" value={dueDateValue} style={inputsStyles} onChange={handleDueDateChange} />
+            <label htmlFor="due date"> Due Date </label>
+            <input
+              type="date"
+              value={dueDateValue}
+              style={inputsStyles}
+              onChange={handleDueDateChange}
+            />
           </div>
-
-          {/* <Button className="primary-btn" type="submit">
-            Add task
-          </Button> */}
-          <button type="submit">Add Task</button>
+          <button className="primary-btn" type="submit">Guardar cambios</button>
         </form>
       </Drawer>
-    </>
+    </div>
   );
 }
 
-export default AddListItem;
+export default EditTask;
